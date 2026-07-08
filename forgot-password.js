@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setLoading(true);
     
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + "/login.html"
+      redirectTo: window.location.origin + "/update-password.html"
     });
     
     setLoading(false);
