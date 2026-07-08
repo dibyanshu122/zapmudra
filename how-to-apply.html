@@ -152,14 +152,14 @@ h1, h2, h3, h4 {
 }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none !important; }
 .brand-mark {
-  width: 44px; height: 44px; border-radius: 12px;
+  width: 48px; height: 48px; border-radius: 12px;
   display: grid; place-items: center;
   background: linear-gradient(135deg, #a464f4 0%, #4a1c82 100%);
   box-shadow: 0 4px 12px rgba(74,28,130,.25);
-  color: #fff;
+  color: #fff; flex-shrink: 0;
 }
-.brand-mark svg { width: 22px; height: 22px; fill: #fff; }
-.brand-text-wrap { display: flex; flex-direction: column; justify-content: center; }
+.brand-mark svg { width: 24px; height: 24px; fill: #fff; }
+.brand-text-wrap { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
 .brand-name {
   font-family: var(--font-display); font-weight: 900;
   font-size: 1.65rem; color: #2D0A5C; letter-spacing: -.03em;
@@ -168,9 +168,13 @@ h1, h2, h3, h4 {
 .brand-name span { color: #A954F5; }
 .brand-tag {
   background: #F3E8FD; color: #6D2BB2; font-weight: 700;
-  font-size: .65rem; padding: 2px 6px; border-radius: 4px;
-  letter-spacing: .08em; display: inline-block; align-self: flex-start;
-  text-transform: uppercase;
+  font-size: .6rem; padding: 2px 6px; border-radius: 4px;
+  letter-spacing: .08em; text-transform: uppercase;
+  margin-bottom: 2px; display: inline-block;
+}
+.brand-tagline {
+  font-size: 0.7rem; color: #9A75D0; font-weight: 500;
+  white-space: nowrap; line-height: 1; margin-top: 1px;
 }
 
 .nav-links { display: flex; align-items: center; gap: 6px; list-style: none; }
@@ -687,6 +691,7 @@ function renderHeader() {
         <div class="brand-text-wrap">
           <span class="brand-name">Zap<span>Mudra</span></span>
           <span class="brand-tag">FINANCE</span>
+          <span class="brand-tagline">Your Finance, Powered Up</span>
         </div>
       </a>
       <ul class="nav-links" id="navLinks">${links}</ul>
