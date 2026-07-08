@@ -150,19 +150,28 @@ h1, h2, h3, h4 {
   display: flex; align-items: center; justify-content: space-between;
   gap: 20px; padding: 14px 0;
 }
-.brand { display: inline-flex; align-items: center; gap: 10px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none !important; }
 .brand-mark {
-  width: 38px; height: 38px; border-radius: 11px;
+  width: 44px; height: 44px; border-radius: 12px;
   display: grid; place-items: center;
-  background: linear-gradient(135deg, var(--navy), var(--zap));
-  box-shadow: 0 6px 16px rgba(123,47,190,.35);
+  background: linear-gradient(135deg, #a464f4 0%, #4a1c82 100%);
+  box-shadow: 0 4px 12px rgba(74,28,130,.25);
+  color: #fff;
 }
-.brand-mark svg { width: 20px; height: 20px; }
+.brand-mark svg { width: 22px; height: 22px; fill: #fff; }
+.brand-text-wrap { display: flex; flex-direction: column; justify-content: center; }
 .brand-name {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: 1.32rem; color: var(--navy); letter-spacing: -.02em;
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 1.65rem; color: #2D0A5C; letter-spacing: -.03em;
+  line-height: 1; margin-bottom: 2px;
 }
-.brand-name span { color: var(--zap); }
+.brand-name span { color: #A954F5; }
+.brand-tag {
+  background: #F3E8FD; color: #6D2BB2; font-weight: 700;
+  font-size: .65rem; padding: 2px 6px; border-radius: 4px;
+  letter-spacing: .08em; display: inline-block; align-self: flex-start;
+  text-transform: uppercase;
+}
 
 .nav-links { display: flex; align-items: center; gap: 6px; list-style: none; }
 .nav-links a {
@@ -654,11 +663,13 @@ function renderHeader() {
     <div class="container nav">
       <a class="brand" href="index.html">
         <span class="brand-mark">${ICONS.bolt}</span>
-        <span class="brand-name">Zap<span>Mudra</span></span>
+        <div class="brand-text-wrap">
+          <span class="brand-name">Zap<span>Mudra</span></span>
+          <span class="brand-tag">FINANCE</span>
+        </div>
       </a>
       <ul class="nav-links" id="navLinks">${links}</ul>
       <div class="nav-cta">
-        <a class="nav-phone" href="tel:${CONFIG.company.phoneRaw}">${ICONS.phone} ${CONFIG.company.phone}</a>
         <span class="nav-auth" id="navAuth"></span>
         <a class="btn btn-gold" href="contact.html#apply">Apply Now</a>
         <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>

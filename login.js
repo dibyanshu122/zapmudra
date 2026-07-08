@@ -80,20 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (error) showError(error.message);
   });
 
-  // ── Forgot Password ────────────────────────────────────────────────
-  forgotLink.addEventListener("click", async e => {
-    e.preventDefault();
-    const email = emailInput.value.trim();
-    if (!email) {
-      showError("Enter your email address above, then click \"Forgot password?\".");
-      return;
-    }
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + "/login.html"
-    });
-    if (error) showError(error.message);
-    else showSuccess("Password reset email sent to " + email + ".");
-  });
+
 
   // ── Auto-redirect if already logged in ────────────────────────────
   supabase.auth.getSession().then(({ data: { session } }) => {
