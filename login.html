@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Zap Mudra</title>
+  <meta name="description" content="Log in to your Zap Mudra account to view and apply for loan and credit card offers from top banks and NBFCs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+/* =====================================================================
+   ZAP MUDRA — Shared Stylesheet
+   ---------------------------------------------------------------------
+   Every colour, font and spacing value used across the whole website
+   lives here. Change a value once and it updates on every page.
+
+   Quick edits you might want:
+   - Brand colours ....... see ":root" block below (--navy, --zap, --gold)
+   - Fonts ............... see the Google Fonts <link> in each HTML page
+   ===================================================================== */
+
+/* ---------- 1. THEME TOKENS (edit brand colours here) ---------------- */
+:root {
+  /* Brand palette */
+  --navy:      #2D0A5C;   /* deep brand navy   */
+  --navy-2:    #A855F7;   /* lighter navy      */
+  --zap:       #7B2FBE;   /* electric "zap" blue (links, highlights) */
+  --zap-soft:  #F3E8FF;   /* pale blue tint    */
+  --gold:      #F59E0B;   /* amber CTA / money accent (Apply buttons) */
+  --gold-deep: #D97F06;
+  --mint:      #10B981;   /* success / positive numbers */
+
+  /* Neutrals */
+  --ink:       #1A1A2E;   /* main text          */
+  --muted:     #64627A;   /* secondary text     */
+  --line:      #E8E0FF;   /* borders / dividers */
+  --bg:        #ffffff;   /* page background    */
+  --bg-soft:   #F8F6FF;   /* section tint       */
+  --bg-navy:   #2D0A5C;   /* dark section bg    */
+
+  /* Shape & motion */
+  --radius:    16px;
+  --radius-sm: 10px;
+  --shadow:    0 10px 30px rgba(45, 10, 92, .08);
+  --shadow-lg: 0 24px 60px rgba(45, 10, 92, .16);
+  --ease:      cubic-bezier(.22, 1, .36, 1);
+
+  /* Fonts */
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body:    "Inter", system-ui, sans-serif;
+}
+
+/* ---------- 2. RESET & BASE ----------------------------------------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.6;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a { color: var(--zap); text-decoration: none; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--navy);
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+/* ---------- 3. LAYOUT HELPERS --------------------------------------- */
+.container { width: min(1180px, 92%); margin-inline: auto; }
+.section   { padding: 84px 0; }
+.section--tint { background: var(--bg-soft); }
+.center { text-align: center; }
+.narrow { max-width: 760px; margin-inline: auto; }
+
+/* ---------- 4. BUTTONS ---------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 13px 26px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s;
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-gold  { background: var(--gold); color: #3a2600; box-shadow: 0 8px 22px rgba(245,158,11,.35); }
+.btn-gold:hover  { background: var(--gold-deep); }
+.btn-navy  { background: var(--navy); color: #fff; }
+.btn-navy:hover  { background: var(--navy-2); }
+.btn-ghost { background: transparent; color: var(--navy); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--zap); color: var(--zap); }
+.btn-lg    { padding: 16px 34px; font-size: 1.08rem; width: 100%; }
+
+/* ---------- 5. HEADER / NAV ----------------------------------------- */
+.site-header {
+  position: sticky; top: 0; z-index: 60;
+  background: rgba(255,255,255,.9);
+  backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; padding: 14px 0;
+}
+.brand { display: inline-flex; align-items: center; gap: 10px; }
+.brand-mark {
+  width: 38px; height: 38px; border-radius: 11px;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--navy), var(--zap));
+  box-shadow: 0 6px 16px rgba(123,47,190,.35);
+}
+.brand-mark svg { width: 20px; height: 20px; }
+.brand-name {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 1.32rem; color: var(--navy); letter-spacing: -.02em;
+}
+.brand-name span { color: var(--zap); }
+
+.nav-links { display: flex; align-items: center; gap: 6px; list-style: none; }
+.nav-links a {
+  color: var(--ink); font-weight: 500; font-size: .97rem;
+  padding: 9px 10px; border-radius: 9px; transition: background .18s, color .18s;
+  white-space: nowrap;
+}
+.nav-links a:hover { background: var(--zap-soft); color: var(--zap); }
+.nav-links a.active { color: var(--zap); font-weight: 600; }
+
+.nav-cta { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
+.nav-phone { color: var(--navy); font-weight: 600; font-size: .95rem; display: inline-flex; gap: 4px; align-items: center; white-space: nowrap; }
+.nav-phone:hover { color: var(--zap); }
+.nav-auth { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.nav-user { color: var(--navy); font-weight: 600; font-size: .9rem; white-space: nowrap; }
+
+.nav-toggle {
+  display: none; width: 44px; height: 44px; border: 1px solid var(--line);
+  background: #fff; border-radius: 10px; cursor: pointer;
+  flex-direction: column; gap: 5px; align-items: center; justify-content: center;
+}
+.nav-toggle span { width: 20px; height: 2px; background: var(--navy); border-radius: 2px; transition: .25s; }
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ---------- 6. PAGE HEADER (inner pages) ----------------------------- */
+.page-head {
+  background:
+    radial-gradient(800px 300px at 85% -20%, rgba(123,47,190,.3), transparent 60%),
+    linear-gradient(160deg, #2D0A5C, #7B2FBE);
+  color: #fff; padding: 64px 0;
+}
+.page-head h1 { color: #fff; font-size: clamp(1.9rem, 4vw, 2.8rem); }
+.page-head p { color: #D9C9F5; margin-top: 12px; max-width: 640px; }
+.breadcrumb { color: #A892CF; font-size: .88rem; margin-bottom: 14px; }
+.breadcrumb a { color: #A892CF; }
+.breadcrumb a:hover { color: #fff; }
+
+/* ---------- 7. FORMS -------------------------------------------------- */
+.auth-wrap { max-width: 460px; margin-inline: auto; }
+.card {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 32px; box-shadow: var(--shadow);
+}
+.field { margin-bottom: 18px; }
+.field label { display: block; font-weight: 600; color: var(--navy); font-size: .92rem; margin-bottom: 7px; }
+.field input {
+  width: 100%; padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px;
+  font-family: var(--font-body); font-size: 1rem; color: var(--ink); background: #fff; transition: border-color .18s, box-shadow .18s;
+}
+.field input:focus {
+  outline: none; border-color: var(--zap); box-shadow: 0 0 0 3px var(--zap-soft);
+}
+.form-note { font-size: .85rem; color: var(--muted); margin-top: 4px; }
+.form-success {
+  display: none; background: #e7f8ef; border: 1px solid #b6ecce; color: #0a7a44;
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 18px; font-weight: 500; font-size: .92rem;
+}
+.form-error {
+  display: none; background: #fdecec; border: 1px solid #f3b7b7; color: #a11212;
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 18px; font-weight: 500; font-size: .92rem;
+}
+.auth-links { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: .9rem; }
+.auth-switch { text-align: center; margin-top: 22px; font-size: .95rem; color: var(--muted); }
+.auth-switch a { font-weight: 600; }
+
+.divider { display: flex; align-items: center; gap: 12px; margin: 22px 0; color: var(--muted); font-size: .85rem; }
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+.google-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+  background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 12px 20px;
+  font-family: var(--font-display); font-weight: 600; font-size: .98rem; color: var(--ink);
+  cursor: pointer; transition: border-color .18s, box-shadow .18s, transform .18s var(--ease);
+}
+.google-btn:hover { border-color: var(--zap); box-shadow: var(--shadow); transform: translateY(-2px); }
+.google-btn svg { width: 20px; height: 20px; }
+
+/* ---------- 8. FOOTER -------------------------------------------------- */
+.site-footer { background: var(--bg-navy); color: #BCA9E4; padding: 64px 0 26px; }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 40px; }
+.footer-brand .brand-name { color: #fff; }
+.footer-about { margin-top: 16px; font-size: .93rem; line-height: 1.7; max-width: 320px; }
+.footer-col h4 { color: #fff; font-size: 1rem; margin-bottom: 16px; }
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 10px; }
+.footer-col a { color: #BCA9E4; font-size: .93rem; }
+.footer-col a:hover { color: #fff; }
+.footer-contact li { display: flex; gap: 10px; align-items: flex-start; font-size: .93rem; margin-bottom: 14px; }
+.footer-contact svg { width: 18px; height: 18px; color: var(--gold); flex: none; margin-top: 2px; }
+.footer-social { display: flex; gap: 12px; margin-top: 18px; }
+.footer-social a {
+  width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center;
+  background: rgba(255,255,255,.08); color: #fff; transition: background .2s;
+}
+.footer-social a:hover { background: var(--zap); }
+.footer-social svg { width: 18px; height: 18px; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.1); margin-top: 44px; padding-top: 22px;
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; font-size: .86rem;
+}
+.footer-disclaimer { font-size: .82rem; color: #9784B8; margin-top: 18px; line-height: 1.7; }
+
+:focus-visible { outline: 3px solid var(--zap); outline-offset: 2px; border-radius: 4px; }
+
+/* ---------- 9. RESPONSIVE --------------------------------------------- */
+@media (max-width: 980px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 760px) {
+  .section { padding: 60px 0; }
+  .nav-links, .nav-phone { display: none; }
+  .nav-toggle { display: flex; }
+  .nav-links.mobile-open {
+    display: flex; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 2px;
+    background: #fff; border-bottom: 1px solid var(--line); padding: 12px 6%;
+    box-shadow: var(--shadow);
+  }
+  .nav-links.mobile-open a { padding: 12px 10px; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .card { padding: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+}
+  </style>
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <section class="page-head">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Home</a> / Login</div>
+      <h1>Welcome back</h1>
+      <p>Log in to view and apply for loan and credit card offers from our banking partners.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container auth-wrap">
+      <div class="card">
+        <div class="form-error" id="loginError"></div>
+        <div class="form-success" id="loginSuccess"></div>
+
+        <button type="button" class="google-btn" id="googleLoginBtn">
+          <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.4 29.3 35 24 35c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.6 4.9 29.6 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.4-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34.6 4.9 29.6 3 24 3 16.3 3 9.6 7.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 45c5.5 0 10.4-1.9 14.2-5l-6.6-5.4C29.6 36.4 26.9 37 24 37c-5.3 0-9.7-3.5-11.3-8.3l-6.6 5.1C9.5 40.6 16.2 45 24 45z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.2 5.6l6.6 5.4C41.4 36 44 30.5 44 24c0-1.4-.1-2.7-.4-3.5z"/></svg>
+          Continue with Google
+        </button>
+
+        <div class="divider">or login with email</div>
+
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" name="email" required autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" name="password" required autocomplete="current-password">
+          </div>
+          <div class="auth-links">
+            <a href="#" id="forgotPasswordLink">Forgot password?</a>
+          </div>
+          <div style="margin-top:20px">
+            <button type="submit" class="btn btn-gold btn-lg" id="loginSubmitBtn" data-label="Login">Login</button>
+          </div>
+        </form>
+
+        <p class="auth-switch">Don't have an account? <a href="register.html">Register</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script>
+/* Header + footer builder (kept consistent with the rest of the site).
+   Bank/loan tiles and EMI logic live only on index.html, so they're not
+   duplicated here. */
+const CONFIG = {
+  company: {
+    name:    "Zap Mudra",
+    phone:   "+91 92058 06525",
+    phoneRaw:"919205806525",
+    email:   "info@zapmudra.com",
+    address: "G Tower, Amrapali Zodiac, Sector 120, Noida, Uttar Pradesh 201301",
+    social: { facebook: "#", instagram: "#", linkedin: "#", youtube: "#" }
+  },
+  menu: [
+    { label: "Home",         href: "index.html" },
+    { label: "Credit Cards", href: "index.html#credit-cards" },
+    { label: "Loans",        href: "index.html#loans" },
+    { label: "How to Apply", href: "how-to-apply.html" },
+    { label: "About Us",     href: "about.html" },
+    { label: "Contact",      href: "contact.html" }
+  ]
+};
+
+const ICONS = {
+  bolt:  '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4.5 13.5H11l-1 8.5L19.5 10H13z"/></svg>',
+  phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>',
+  mail:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>',
+  pin:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  fb: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>',
+  ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
+  li: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9z"/></svg>',
+  yt: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.3-.4-4.8a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.4A2.5 2.5 0 0 0 1.4 7.2 26 26 0 0 0 1 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.4a2.5 2.5 0 0 0 1.8-1.8C23 15.3 23 12 23 12zM10 15V9l5 3z"/></svg>'
+};
+
+function renderHeader() {
+  const el = document.getElementById("site-header");
+  if (!el) return;
+  const links = CONFIG.menu.map(m => `<li><a href="${m.href}">${m.label}</a></li>`).join("");
+  el.innerHTML = `
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">${ICONS.bolt}</span>
+        <span class="brand-name">Zap<span>Mudra</span></span>
+      </a>
+      <ul class="nav-links" id="navLinks">${links}</ul>
+      <div class="nav-cta">
+        <a class="nav-phone" href="tel:${CONFIG.company.phoneRaw}">${ICONS.phone} ${CONFIG.company.phone}</a>
+        <span class="nav-auth" id="navAuth"></span>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>`;
+  const toggle = document.getElementById("navToggle");
+  const menu = document.getElementById("navLinks");
+  toggle.addEventListener("click", () => {
+    menu.classList.toggle("mobile-open");
+    toggle.classList.toggle("open");
+  });
+}
+
+function renderFooter() {
+  const el = document.getElementById("site-footer");
+  if (!el) return;
+  const c = CONFIG.company;
+  const soc = (url, icon) => url && url !== "#" ? `<a href="${url}" target="_blank" rel="noopener">${icon}</a>` : "";
+  el.innerHTML = `
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">
+            <span class="brand-mark">${ICONS.bolt}</span>
+            <span class="brand-name">Zap<span>Mudra</span></span>
+          </a>
+          <p class="footer-about">${c.name} helps you compare and apply for loans and credit cards from leading banks and NBFCs — quickly, and with no charge to you.</p>
+          <div class="footer-social">
+            ${soc(c.social.facebook, ICONS.fb)}
+            ${soc(c.social.instagram, ICONS.ig)}
+            ${soc(c.social.linkedin, ICONS.li)}
+            ${soc(c.social.youtube, ICONS.yt)}
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="index.html#credit-cards">Credit Cards</a></li>
+            <li><a href="index.html#loans">Loans</a></li>
+            <li><a href="index.html#emi">EMI Calculator</a></li>
+            <li><a href="how-to-apply.html">How to Apply</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms &amp; Conditions</a></li>
+            <li><a href="disclaimer.html">Disclaimer</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get in touch</h4>
+          <ul class="footer-contact">
+            <li>${ICONS.phone}<a href="tel:${c.phoneRaw}">${c.phone}</a></li>
+            <li>${ICONS.mail}<a href="mailto:${c.email}">${c.email}</a></li>
+            <li>${ICONS.pin}<span>${c.address}</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-disclaimer"><strong>Disclaimer:</strong> ${c.name} is a loan and credit-card facilitator / referral platform, not a bank, NBFC or lender. We do not charge customers any fee for our services. All loan and credit-card approvals, interest rates, and terms are decided solely by the respective banks / NBFCs. Logos and brand names belong to their respective owners and are used for identification only.</p>
+      <div class="footer-bottom">
+        <span>© ${new Date().getFullYear()} ${c.name}. All rights reserved.</span>
+        <span>Made with care · <a href="privacy-policy.html" style="color:#BCA9E4;text-decoration:underline;">Privacy</a> · <a href="terms.html" style="color:#BCA9E4;text-decoration:underline;">Terms</a></span>
+      </div>
+    </div>`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderHeader();
+  renderFooter();
+});
+  </script>
+
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase-config.js?v=3"></script>
+  <script src="auth.js?v=4"></script>
+  <script src="login.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Zap Mudra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #2D0A5C;
+      --zap: #7B2FBE;
+      --bg: #F8F6FF;
+      --line: #E8E0FF;
+      --font-display: "Space Grotesk", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+    }
+    body { font-family: var(--font-body); background: var(--bg); color: #1A1A2E; margin: 0; padding: 40px; }
+    h1 { font-family: var(--font-display); color: var(--navy); margin-bottom: 20px; }
+    .container { max-width: 1200px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(45,10,92,.08); }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+    th { background: var(--navy); color: #fff; font-family: var(--font-display); font-weight: 600; }
+    tr:hover { background: #f9f9fc; }
+    .status { padding: 4px 8px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; }
+    .status.active { background: #dcfce7; color: #166534; }
+    .status.inactive { background: #fee2e2; color: #991b1b; }
+    #errorMsg { color: #dc2626; padding: 10px; background: #fee2e2; border-radius: 8px; margin-bottom: 20px; display: none; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Zap Mudra — Admin Dashboard</h1>
+  <p>Welcome, Admin. This page is only accessible to authorized emails.</p>
+  <div id="errorMsg"></div>
+
+  <h2>All User Clicks</h2>
+  <table id="clicksTable">
+    <thead>
+      <tr>
+        <th>Date & Time</th>
+        <th>User Name / Email</th>
+        <th>Bank Name</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody id="clicksBody">
+      <tr><td colspan="4">Loading data...</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="margin-top: 50px;">Registered Users (Profiles)</h2>
+  <table id="usersTable">
+    <thead>
+      <tr>
+        <th>Joined At</th>
+        <th>Name</th>
+        <th>Email (ID)</th>
+      </tr>
+    </thead>
+    <tbody id="usersBody">
+      <tr><td colspan="3">Loading data...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="supabase-config.js?v=3"></script>
+<script>
+async function initAdmin() {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) {
+    alert("You must be logged in as an admin to view this page.");
+    location.href = "login.html";
+    return;
+  }
+
+  // Fetch Clicks
+  const { data: clicks, error: clicksError } = await supabase
+    .from("link_clicks")
+    .select(`
+      clicked_at,
+      user_id,
+      loan_links ( bank_name, category ),
+      profiles ( full_name )
+    `)
+    .order("clicked_at", { ascending: false });
+
+  if (clicksError) {
+    const el = document.getElementById("errorMsg");
+    el.style.display = "block";
+    el.innerText = "Error fetching clicks: You might not have Admin permissions.";
+  } else {
+    const tbody = document.getElementById("clicksBody");
+    tbody.innerHTML = clicks.map(c => {
+      const date = new Date(c.clicked_at).toLocaleString();
+      const userName = c.profiles?.full_name || c.user_id;
+      const bank = c.loan_links?.bank_name || "Unknown";
+      const cat = c.loan_links?.category || "Unknown";
+      return `<tr>
+        <td>${date}</td>
+        <td>${userName}</td>
+        <td>${bank}</td>
+        <td>${cat}</td>
+      </tr>`;
+    }).join("") || `<tr><td colspan="4">No clicks recorded yet.</td></tr>`;
+  }
+
+  // Fetch Profiles
+  const { data: profiles, error: profError } = await supabase
+    .from("profiles")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (!profError) {
+    const tbody = document.getElementById("usersBody");
+    tbody.innerHTML = profiles.map(p => {
+      const date = new Date(p.created_at).toLocaleString();
+      const name = p.full_name || "N/A";
+      const id = p.id;
+      return `<tr>
+        <td>${date}</td>
+        <td>${name}</td>
+        <td style="font-size:0.85em; color:#666;">${id}</td>
+      </tr>`;
+    }).join("") || `<tr><td colspan="3">No profiles found.</td></tr>`;
+  }
+}
+
+initAdmin();
+</script>
+</body>
+</html>
