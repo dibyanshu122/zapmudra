@@ -124,7 +124,7 @@
     <div class="zm-chat-box" id="zmChatBox">
       <div class="zm-chat-header">
         <h3>Hi there! 👋</h3>
-        <p>Need help with your loan or account?</p>
+        <p>Get your loan approved in just 2 minutes! 🚀</p>
         <button class="zm-chat-close" id="zmChatClose">&times;</button>
       </div>
       <div class="zm-chat-body">
