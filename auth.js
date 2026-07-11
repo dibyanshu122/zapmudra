@@ -78,12 +78,8 @@ const ZapAuth = (() => {
           return;
         }
 
-        // Check email verified
+        // Removed email verification check.
         const user = session.user;
-        if (!user.email_confirmed_at) {
-          alert("Please verify your email first. Check your inbox for the verification link.");
-          return;
-        }
 
         // If they click a teaser card on the home page while logged in,
         // redirect them to the dashboard instead of the partner link.

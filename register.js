@@ -65,23 +65,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Update profile name in profiles table
+    // Update profile name and phone in profiles table
     if (data.user) {
       await supabase.from("profiles").upsert({
         id: data.user.id,
-        full_name: name
+        full_name: name,
+        phone: mobile
       });
     }
 
-    // Sign out so user must verify email first
-    await supabase.auth.signOut();
-
-    showSuccess(`
-      ✅ <strong>Account created!</strong><br>
-      We've sent a verification email to <strong>${email}</strong>.<br>
-      Please check your inbox (and spam folder) and click the link to verify your account, then <a href="login.html">login here</a>.
-    `);
-    form.style.display = "none";
+    // Redirect directly to dashboard
+    window.location.href = "dashboard.html";
   });
 
   // ── Google OAuth Sign-Up ───────────────────────────────────────────

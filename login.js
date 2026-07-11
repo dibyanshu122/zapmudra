@@ -52,12 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Check email verified
-    if (!data.user.email_confirmed_at) {
-      await supabase.auth.signOut();
-      showError("Please verify your email before logging in. Check your inbox.");
-      return;
-    }
+    // Removed email verification check.
+
 
     window.location.href = "dashboard.html";
   });
@@ -84,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ── Auto-redirect if already logged in ────────────────────────────
   supabase.auth.getSession().then(({ data: { session } }) => {
-    if (session?.user?.email_confirmed_at) {
+    if (session) {
       window.location.href = "dashboard.html";
     }
   });
