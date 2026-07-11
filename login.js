@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const passInput   = document.getElementById("loginPassword");
   const errorBox    = document.getElementById("loginError");
   const successBox  = document.getElementById("loginSuccess");
-  const googleBtn   = document.getElementById("googleLoginBtn");
   const forgotLink  = document.getElementById("forgotPasswordLink");
   const submitBtn   = document.getElementById("loginSubmitBtn");
 
@@ -56,24 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     window.location.href = "dashboard.html";
-  });
-
-  // ── Google OAuth Login ─────────────────────────────────────────────
-  googleBtn.addEventListener("click", async () => {
-    errorBox.style.display = "none";
-    // Save redirect target before OAuth redirect
-    ZapAuth.rememberCurrentPage();
-    // Store where to go after login in localStorage (survives redirect)
-    const target = sessionStorage.getItem("zm_postLoginRedirect") || "index.html";
-    localStorage.setItem("zm_oauth_redirect", target);
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: window.location.origin + "/dashboard.html"
-      }
-    });
-    if (error) showError(error.message);
   });
 
 

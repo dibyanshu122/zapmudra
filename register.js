@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmInput= document.getElementById("regConfirm");
   const errorBox    = document.getElementById("registerError");
   const successBox  = document.getElementById("registerSuccess");
-  const googleBtn   = document.getElementById("googleRegisterBtn");
   const submitBtn   = document.getElementById("registerSubmitBtn");
 
   function showError(msg) {
@@ -76,19 +75,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Redirect directly to dashboard
     window.location.href = "dashboard.html";
-  });
-
-  // ── Google OAuth Sign-Up ───────────────────────────────────────────
-  googleBtn.addEventListener("click", async () => {
-    errorBox.style.display = "none";
-    localStorage.setItem("zm_oauth_redirect", "dashboard.html");
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: window.location.origin + "/dashboard.html"
-      }
-    });
-    if (error) showError(error.message);
   });
 });
